@@ -1,3 +1,4 @@
 eclipse.preferences.version=1
 encoding//src/bt/smslock/SmsLockActivity.java=UTF-8
 encoding//src/bt/smslock/data/daos/DBHelper.java=UTF-8
+encoding//src/bt/smslock/storages/LoginStoragePreference.java=UTF-8
