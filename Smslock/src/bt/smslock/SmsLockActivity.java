@@ -7,9 +7,12 @@ import android.os.Bundle;
 import android.widget.Toast;
 import bt.smslock.data.daos.DBHelper;
 import bt.smslock.data.dataloaders.ThreadSMSLoader;
+import bt.smslock.data.entities.ThreadSMSEntity;
+import bt.smslock.fragments.FragmentListMessages;
 import bt.smslock.fragments.FragmentListThreadMessage;
+import bt.smslock.interfaces.ITranferToContactMessage;
 
-public class SmsLockActivity extends Activity {
+public class SmsLockActivity extends Activity implements ITranferToContactMessage{
 
 	@Override
 	protected void onCreate(Bundle savedInstanceState) {
@@ -37,8 +40,12 @@ public class SmsLockActivity extends Activity {
 		if (savedInstanceState == null) {
 			getFragmentManager().beginTransaction()
 					.add(R.id.container, new FragmentListThreadMessage(
-							threadSMSLoader.getListThreadMessages())).commit();
+							threadSMSLoader.getListThreadMessages(), this)).commit();
 		}
 	}
-	
+
+	@Override
+	public void tranferToContactMessage(ThreadSMSEntity entity) {
+			getFragmentManager().beginTransaction().add(R.id.container, new FragmentListMessages(entity)).commit();
+	}
 }
