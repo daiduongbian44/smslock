@@ -30,10 +30,14 @@ public class SmsLockActivity extends Activity {
 		// load tin nhắn
 		ThreadSMSLoader threadSMSLoader = new ThreadSMSLoader(this);
         threadSMSLoader.loadAllThreadSMS();
+        
+        Toast.makeText(getApplicationContext(), "Count: " + 
+        threadSMSLoader.getListThreadMessages().size(),Toast.LENGTH_LONG).show();
 		
 		if (savedInstanceState == null) {
 			getFragmentManager().beginTransaction()
-					.add(R.id.container, new FragmentListThreadMessage()).commit();
+					.add(R.id.container, new FragmentListThreadMessage(
+							threadSMSLoader.getListThreadMessages())).commit();
 		}
 	}
 	

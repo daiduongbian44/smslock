@@ -38,6 +38,5 @@ public class FragmentListThreadMessage extends Fragment {
 
 	public void initComponents() {
 		lvThread = (ListView) rootView.findViewById(R.id.lv_thread);
-		listThread = new ArrayList<>();
 	}
 }
