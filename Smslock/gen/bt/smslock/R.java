@@ -25,10 +25,19 @@ public final class R {
         public static final int ic_launcher=0x7f020000;
     }
     public static final class id {
-        public static final int action_settings=0x7f080000;
+        public static final int LinearLayout1=0x7f080001;
+        public static final int action_settings=0x7f080007;
+        public static final int container=0x7f080000;
+        public static final int lv_thread=0x7f080002;
+        public static final int thread_icon=0x7f080003;
+        public static final int thread_name=0x7f080004;
+        public static final int thread_phone_number=0x7f080005;
+        public static final int thread_time=0x7f080006;
     }
     public static final class layout {
         public static final int activity_sms_lock=0x7f030000;
+        public static final int fragment_listthread_message=0x7f030001;
+        public static final int item_thread=0x7f030002;
     }
     public static final class menu {
         public static final int sms_lock=0x7f070000;
