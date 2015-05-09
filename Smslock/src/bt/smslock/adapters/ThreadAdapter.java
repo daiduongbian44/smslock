@@ -14,6 +14,7 @@ import bt.smslock.R;
 import bt.smslock.data.entities.SMSEntity;
 import bt.smslock.data.entities.ThreadSMSEntity;
 
+@SuppressLint("ViewHolder")
 public class ThreadAdapter extends BaseAdapter {
 
 	private ArrayList<ThreadSMSEntity> listThread;
@@ -42,9 +43,10 @@ public class ThreadAdapter extends BaseAdapter {
 		return position;
 	}
 
-	public class Holder {
+	private class Holder {
 		TextView name;
 		TextView latest;
+		TextView time;
 		ImageView img;
 	}
 
@@ -57,11 +59,14 @@ public class ThreadAdapter extends BaseAdapter {
 		holder.name = (TextView) rowView.findViewById(R.id.thread_name);
 		holder.img = (ImageView) rowView.findViewById(R.id.thread_icon);
 		holder.latest = (TextView) rowView.findViewById(R.id.thread_latest);
+		holder.time = (TextView) rowView.findViewById(R.id.thread_time);
+		
 		holder.name.setText(listThread.get(position).getContactName());
-		// temp set phoneNumber by address
 		holder.latest.setText(listThread.get(position).getLatestSMS()
 				.getHashMessage().get(SMSEntity.BODY));
 		holder.img.setImageResource(R.drawable.ic_launcher);
+		holder.time.setText(listThread.get(position).getLatestSMS().getDateString());
+		
 		rowView.setOnClickListener(new OnClickListener() {
 			@Override
 			public void onClick(View v) {

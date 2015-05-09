@@ -29,6 +29,7 @@ public class FragmentListThreadMessage extends Fragment {
 				container, false);
 
 		initComponents();
+		
 		ThreadAdapter adapter = new ThreadAdapter(getActivity()
 				.getApplicationContext(), listThread);
 		lvThread.setAdapter(adapter);
