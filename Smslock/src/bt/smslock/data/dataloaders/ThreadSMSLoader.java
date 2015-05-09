@@ -4,11 +4,15 @@ import java.util.ArrayList;
 import java.util.Collections;
 import java.util.HashMap;
 
+import com.google.i18n.phonenumbers.PhoneNumberUtil;
+import com.google.i18n.phonenumbers.PhoneNumberUtil.MatchType;
+
 import android.app.Activity;
 import android.database.Cursor;
 import android.net.Uri;
 import bt.smslock.data.entities.SMSEntity;
 import bt.smslock.data.entities.ThreadSMSEntity;
+import bt.smslock.data.entities.UserEntity;
 
 /**
  * Created by manh on 9/5/2015.
@@ -18,11 +22,15 @@ public class ThreadSMSLoader {
 	private ArrayList<SMSEntity> mListMessages;
 	private ArrayList<ThreadSMSEntity> mListThreadMessages;
 	private ContactLoader contactLoader;
+	
+	private ArrayList<ThreadSMSEntity> mListThreadMessageNonSecure;
 
 	public ThreadSMSLoader(Activity mActivity) {
 		this.mActivity = mActivity;
 		mListMessages = new ArrayList<>();
 		mListThreadMessages = new ArrayList<>();
+		mListThreadMessageNonSecure = new ArrayList<>();
+		
 		contactLoader = new ContactLoader(mActivity);
 		contactLoader.loadContacts();
 	}
@@ -113,5 +121,37 @@ public class ThreadSMSLoader {
 
 	public ArrayList<ThreadSMSEntity> getListThreadMessages() {
 		return mListThreadMessages;
+	}
+	
+	public void resetListThreadMessageNonSecure() {
+		// load user and refresh data
+		UserSecureLoader userLoader = new UserSecureLoader();
+		userLoader.loadListUser();
+		
+		mListThreadMessageNonSecure.clear();
+		for(int i = 0; i<mListThreadMessages.size();++i){
+			
+			boolean isContain = false;
+			for(int j = 0; j<userLoader.getListUserEntity().size();++j){
+				UserEntity user = userLoader.getListUserEntity().get(j);
+				
+				// compare phone number
+				String user1Number = mListThreadMessages.get(i).getAddress();
+				String user2Number = user.getUserNumber();
+				
+				PhoneNumberUtil pnu = PhoneNumberUtil.getInstance();
+				MatchType mt = pnu.isNumberMatch(user1Number, user2Number);
+				if (mt == MatchType.NSN_MATCH || mt == MatchType.EXACT_MATCH) {
+					isContain = true;
+				}
+			}
+			if(!isContain){
+				mListThreadMessageNonSecure.add(mListThreadMessages.get(i));
+			}
+		}
+	}
+	
+	public ArrayList<ThreadSMSEntity> getListThreadMessageNonSecure() {
+		return mListThreadMessageNonSecure;
 	}
 }
