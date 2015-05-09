@@ -11,7 +11,7 @@
         android:padding="3dip"
         android:layout_alignParentLeft="true"
         android:background="@drawable/image_bg"
-        android:layout_marginRight="5dip">
+        android:layout_marginRight="8dip">
 
         <ImageView
             android:id="@+id/thread_icon"
