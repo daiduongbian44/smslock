@@ -17,11 +17,14 @@ public class ThreadSMSLoader {
 	private Activity mActivity;
 	private ArrayList<SMSEntity> mListMessages;
 	private ArrayList<ThreadSMSEntity> mListThreadMessages;
+	private ContactLoader contactLoader;
 
 	public ThreadSMSLoader(Activity mActivity) {
 		this.mActivity = mActivity;
 		mListMessages = new ArrayList<>();
 		mListThreadMessages = new ArrayList<>();
+		contactLoader = new ContactLoader(mActivity);
+		contactLoader.loadContacts();
 	}
 
 	public void loadMessageInbox() {
@@ -95,8 +98,12 @@ public class ThreadSMSLoader {
 		for (int i = 0; i < listKeys.length; ++i) {
 			mListThreadMessages.add(hashCountThread.get(listKeys[i]));
 		}
+		
 		for (int i = 0; i < mListThreadMessages.size(); ++i) {
-			mListThreadMessages.get(i).sortMessage();
+			ThreadSMSEntity entity = mListThreadMessages.get(i);
+			entity.sortMessage();
+			entity.fitAddress();
+			entity.setContactName(contactLoader.findContactNameWithNumber(entity.getAddress()));
 		}
 	}
 
