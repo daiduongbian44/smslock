@@ -70,6 +70,8 @@ public class FragmentListMessages extends Fragment implements
 		textMessageContent = (EditText) rootView
 				.findViewById(R.id.editTextMessage);
 		btnSend = (Button) rootView.findViewById(R.id.buttonSend);
+		
+		btnSend.setOnClickListener(this);
 
 		textMessageContent.addTextChangedListener(new TextWatcher() {
 

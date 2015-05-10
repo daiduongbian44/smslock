@@ -34,8 +34,8 @@ public class SmsLockActivity extends Activity implements ITranferToContactMessag
 			e.printStackTrace();
 		}
 		
-		Intent intent = new Intent(this, UserBlackListActivity.class);
-		startActivity(intent);
+		//Intent intent = new Intent(this, UserBlackListActivity.class);
+		//startActivity(intent);
 		
 		// load tin nhắn
 		ThreadSMSLoader threadSMSLoader = new ThreadSMSLoader(this);

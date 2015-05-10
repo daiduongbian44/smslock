@@ -7,7 +7,7 @@ import android.view.View;
 import android.view.ViewGroup;
 import bt.smslock.R;
 
-public class SendMessage extends Fragment {
+public class FragmentSendMessage extends Fragment {
 
 	private View rootView;
 
