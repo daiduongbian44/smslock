@@ -1,7 +1,6 @@
 package bt.smslock.adapters;
 
 import java.util.ArrayList;
-import java.util.List;
 
 import android.content.Context;
 import android.graphics.Bitmap;
@@ -10,6 +9,7 @@ import android.view.Gravity;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.view.ViewGroup.LayoutParams;
 import android.widget.BaseAdapter;
 import android.widget.LinearLayout;
 import android.widget.TextView;
@@ -21,17 +21,17 @@ public class MessageAdapter extends BaseAdapter {
 	private TextView chatText;
 	private ArrayList<SMSEntity> chatMessageList = new ArrayList<SMSEntity>();
 	private LinearLayout singleMessageContainer;
-	
+
 	public MessageAdapter(Context context, ArrayList<SMSEntity> chatMessageList) {
 		this.context = context;
 		this.chatMessageList = chatMessageList;
 	}
-	
+
 	public int getCount() {
 		return this.chatMessageList.size();
 	}
 
-	public SMSEntity getItem(int index) {
+	public Object getItem(int index) {
 		return this.chatMessageList.get(index);
 	}
 
@@ -40,23 +40,44 @@ public class MessageAdapter extends BaseAdapter {
 		if (row == null) {
 			LayoutInflater inflater = (LayoutInflater) context
 					.getSystemService(Context.LAYOUT_INFLATER_SERVICE);
-			row = inflater.inflate(R.layout.fragment_message, parent,
-					false);
+			row = inflater.inflate(R.layout.item_message, parent, false);
 		}
 		singleMessageContainer = (LinearLayout) row
 				.findViewById(R.id.singleMessageContainer);
-		SMSEntity chatMessageObj = getItem(position);
-		chatText = (TextView) row.findViewById(R.id.message);
-		chatText.setText(chatMessageObj.getHashMessage().get(SMSEntity.BODY));
-		String type = chatMessageObj.getHashMessage().get(SMSEntity.TYPE);
-		if (!type.isEmpty()) {
-			int typeInt = Integer.parseInt(type);
-			if (typeInt == 1) {
-				chatText.setBackgroundResource(R.drawable.bubble_a);
-				singleMessageContainer.setGravity(Gravity.LEFT);
-			} else if (typeInt == 2) {
-				chatText.setBackgroundResource(R.drawable.bubble_b);
-				singleMessageContainer.setGravity(Gravity.RIGHT);
+
+		SMSEntity chatMessageObj = (SMSEntity) getItem(position);
+		if (chatMessageObj != null) {
+			chatText = (TextView) row.findViewById(R.id.message);
+			String body = chatMessageObj.getHashMessage().get(SMSEntity.BODY);
+			if (body != null)
+				chatText.setText(body);
+
+			String type = chatMessageObj.getHashMessage().get(SMSEntity.TYPE);
+			if (!type.isEmpty()) {
+				int typeInt = Integer.parseInt(type);
+
+				if (typeInt == 1) {
+					chatText.setBackgroundResource(R.drawable.bubble_b);
+					singleMessageContainer.setGravity(Gravity.LEFT);
+					
+					LinearLayout.LayoutParams params = new LinearLayout.LayoutParams(
+					        LayoutParams.WRAP_CONTENT,      
+					        LayoutParams.WRAP_CONTENT
+					);
+					params.setMargins(5, 5, 35, 5);
+					chatText.setLayoutParams(params);
+					
+				} else if (typeInt == 2) {
+					chatText.setBackgroundResource(R.drawable.bubble_a);
+					singleMessageContainer.setGravity(Gravity.RIGHT);
+					
+					LinearLayout.LayoutParams params = new LinearLayout.LayoutParams(
+					        LayoutParams.WRAP_CONTENT,      
+					        LayoutParams.WRAP_CONTENT
+					);
+					params.setMargins(35, 5, 5, 5);
+					chatText.setLayoutParams(params);
+				}
 			}
 		}
 		return row;

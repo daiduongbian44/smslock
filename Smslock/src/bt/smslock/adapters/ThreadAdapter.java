@@ -1,11 +1,11 @@
 package bt.smslock.adapters;
 
 import java.util.ArrayList;
+
 import android.annotation.SuppressLint;
 import android.content.Context;
 import android.view.LayoutInflater;
 import android.view.View;
-import android.view.View.OnClickListener;
 import android.view.ViewGroup;
 import android.widget.BaseAdapter;
 import android.widget.ImageView;
@@ -53,26 +53,26 @@ public class ThreadAdapter extends BaseAdapter {
 	@SuppressLint("InflateParams")
 	@Override
 	public View getView(final int position, View convertView, ViewGroup parent) {
+
+		View rowView = convertView;
+		if (rowView == null) {
+			rowView = inflater.inflate(R.layout.item_thread, parent, false);
+		}
+
 		Holder holder = new Holder();
-		View rowView;
-		rowView = inflater.inflate(R.layout.item_thread, null, false);
+
 		holder.name = (TextView) rowView.findViewById(R.id.thread_name);
 		holder.img = (ImageView) rowView.findViewById(R.id.thread_icon);
 		holder.latest = (TextView) rowView.findViewById(R.id.thread_latest);
 		holder.time = (TextView) rowView.findViewById(R.id.thread_time);
-		
+
 		holder.name.setText(listThread.get(position).getContactName());
 		holder.latest.setText(listThread.get(position).getLatestSMS()
 				.getHashMessage().get(SMSEntity.BODY));
 		holder.img.setImageResource(R.drawable.ic_launcher);
-		holder.time.setText(listThread.get(position).getLatestSMS().getDateString());
-		
-		rowView.setOnClickListener(new OnClickListener() {
-			@Override
-			public void onClick(View v) {
+		holder.time.setText(listThread.get(position).getLatestSMS()
+				.getDateString());
 
-			}
-		});
 		return rowView;
 	}
 }

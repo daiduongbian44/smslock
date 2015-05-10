@@ -13,7 +13,8 @@
         android:layout_alignParentTop="true"
         android:divider="#b5b5b5"
         android:dividerHeight="0.3dp"
-        android:listSelector="@drawable/list_selector" >
+        android:listSelector="@drawable/list_selector" 
+        >
     </ListView>
 
     <ImageView
