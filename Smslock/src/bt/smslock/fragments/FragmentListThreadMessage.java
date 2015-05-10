@@ -6,9 +6,11 @@ import android.app.Fragment;
 import android.os.Bundle;
 import android.view.LayoutInflater;
 import android.view.View;
+import android.view.View.OnClickListener;
 import android.view.ViewGroup;
 import android.widget.AdapterView;
 import android.widget.AdapterView.OnItemClickListener;
+import android.widget.ImageView;
 import android.widget.ListView;
 import android.widget.Toast;
 import bt.smslock.R;
@@ -22,6 +24,7 @@ public class FragmentListThreadMessage extends Fragment {
 	private ListView lvThread;
 	private ArrayList<ThreadSMSEntity> listThread;
 	private ITranferToContactMessage callbackToMessage;
+	private ImageView newThreadMessage;
 
 	public FragmentListThreadMessage(ArrayList<ThreadSMSEntity> listThread, ITranferToContactMessage callbackToMessage) {
 		this.listThread = listThread;
@@ -52,10 +55,23 @@ public class FragmentListThreadMessage extends Fragment {
 				}
 			}
 		});
+		
+		newThreadMessage.setOnClickListener(new OnClickListener() {
+			
+			@Override
+			public void onClick(View v) {
+				if (callbackToMessage != null) {
+					callbackToMessage.tranferToNewMessage();
+				}
+			}
+		});
+		
 		return rootView;
 	}
 
 	public void initComponents() {
 		lvThread = (ListView) rootView.findViewById(R.id.lv_thread);
+		newThreadMessage = (ImageView) rootView.findViewById(R.id.new_thread_message);
 	}
+	
 }

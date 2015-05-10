@@ -6,7 +6,6 @@ import android.app.Activity;
 import android.app.Fragment;
 import android.app.FragmentManager;
 import android.app.FragmentTransaction;
-import android.content.Intent;
 import android.os.Bundle;
 import android.widget.Toast;
 import bt.smslock.data.daos.DBHelper;
@@ -14,9 +13,10 @@ import bt.smslock.data.dataloaders.ThreadSMSLoader;
 import bt.smslock.data.entities.ThreadSMSEntity;
 import bt.smslock.fragments.FragmentListMessages;
 import bt.smslock.fragments.FragmentListThreadMessage;
+import bt.smslock.fragments.FragmentSendMessage;
 import bt.smslock.interfaces.ITranferToContactMessage;
 
-public class SmsLockActivity extends Activity implements ITranferToContactMessage{
+public class SmsLockActivity extends Activity implements ITranferToContactMessage {
 
 	@Override
 	protected void onCreate(Bundle savedInstanceState) {
@@ -56,7 +56,7 @@ public class SmsLockActivity extends Activity implements ITranferToContactMessag
         FragmentManager manager = getFragmentManager();
         boolean fragmentPopped = manager.popBackStackImmediate(backStateName, 0);
 
-        if (!fragmentPopped){
+        if (!fragmentPopped) {
             FragmentTransaction ft = manager.beginTransaction();
             ft.add(R.id.container, fragment);
             ft.addToBackStack(backStateName);
@@ -77,4 +77,9 @@ public class SmsLockActivity extends Activity implements ITranferToContactMessag
             super.onBackPressed();
         }
     }
+
+	@Override
+	public void tranferToNewMessage() {
+		changeFragmentContent(new FragmentSendMessage());
+	}
 }

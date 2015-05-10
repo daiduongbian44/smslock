@@ -18,7 +18,7 @@
     </ListView>
 
     <ImageView
-        android:id="@+id/imageButton1"
+        android:id="@+id/new_thread_message"
         android:layout_width="60dp"
         android:layout_height="60dp"
         android:layout_alignParentBottom="true"
