@@ -6,6 +6,7 @@ import android.app.Activity;
 import android.app.Fragment;
 import android.app.FragmentManager;
 import android.app.FragmentTransaction;
+import android.content.Intent;
 import android.os.Bundle;
 import android.widget.Toast;
 import bt.smslock.data.daos.DBHelper;
@@ -32,6 +33,9 @@ public class SmsLockActivity extends Activity implements ITranferToContactMessag
 					.show();
 			e.printStackTrace();
 		}
+		
+		Intent intent = new Intent(this, UserBlackListActivity.class);
+		startActivity(intent);
 		
 		// load tin nhắn
 		ThreadSMSLoader threadSMSLoader = new ThreadSMSLoader(this);
